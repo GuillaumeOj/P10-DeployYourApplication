@@ -1,10 +1,10 @@
 pull_request_rules:
   - name: Automatic merge Guillaume's pull requests without CI
     conditions:
-      - author=GuillaumeOj
+      - "author=GuillaumeOj"
     actions:
       merge:
-        strict: smart
-        method: rebase
+        strict: "smart"
+        method: "rebase"
       delete_head_branch:
         force: True
