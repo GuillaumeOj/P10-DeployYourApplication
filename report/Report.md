@@ -15,7 +15,7 @@ geometry: margin=1.5cm
 
 Ce projet se base sur le projet 8 : _[Créez une plateforme pour les amateurs de Nutella](https://openclassrooms.com/fr/paths/68/projects/159/assignment)_.
 
-L'objectif principal de ce projet et de déployer l'application du projet 8 sur un serveur paramétré par nos soins. Pour celà nous devons mettre en œuvre les éléments suivants :
+L'objectif principal de ce projet et de déployer l'application du projet 8 sur un serveur paramétré par nos soins. Pour cela nous devons mettre en œuvre les éléments suivants :
 - un outil d'intégration continue type [Travis](https://travis-ci.com/),
 - déployer l'application sur un serveur du même type que ceux proposés pas [Digital Ocean](https://www.digitalocean.com/),
 - un outil de monitoring permettant le suivi des performances du serveur,
