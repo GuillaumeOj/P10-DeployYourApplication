@@ -27,4 +27,5 @@ This project use:
 - The application is deployed here: http://projet-10.ojardias.io
 - The project's report is here: [report/Report.md](report/Report.md)
 - The project's presentation is here: [report/Presentation.md](report/Presentation.md)
+- The code for the project is part of my project number 8 available here: [project's source code](https://github.com/GuillaumeOj/Pur-Beurre)
 
