@@ -1,3 +1,8 @@
+[![Mergify Status][mergify-status]][mergify]
+
+[mergify]: https://mergify.io
+[mergify-status]: https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/GuillaumeOj/P10-DeployYourApplication&style=flat
+
 # Contents page
 - [I. What is it?](#i-what-is-it)
 - [I. Links](#ii-links)
