@@ -1,18 +1,7 @@
 pull_request_rules:
   - name: Automatic merge Guillaume's pull requests without CI
     conditions:
-      - author=guillaumeoj
-      - label=no-review
-      - label=no-ci
-    actions:
-      merge:
-        method: merge
-  - name: Automatic merge Guillaume's pull requests with CI
-    conditions:
-      - author=guillaumeoj
-      - label!=work-in-progress
-      - label!=manual merge
-      - "status-success=Travis CI - Branch"
+      - author=GuillaumeOj
     actions:
       merge:
         method: merge
