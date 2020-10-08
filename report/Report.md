@@ -29,6 +29,28 @@ L'objectif principal de ce projet et de déployer l'application du projet 8 sur 
 
 # II. Démarche de création
 
+## II.1. Mise en place du serveur
+
+- Création du droplet
+- Mise à jours des packages du serveur
+- Installation de python, postgresql, git, nginx et supervisor
+- Clone du repository sur le serveur
+- Paramétrage nginx et supervisor
+- Paramétrage du pare-feu
+- Création de tâches CRON
+- Mise en place du domaine et des sous-domaines
+
+
+## II.2. Mise en place du CI
+
+- Paramétrage Travis
+- Mise en place de Mergify
+
+
+## II.3. Monitoring de l'application
+
+- Sentry
+- Monitoring Digital Ocean
 
 # III. Bilan
 
