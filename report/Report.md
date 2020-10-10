@@ -31,26 +31,47 @@ L'objectif principal de ce projet et de déployer l'application du projet 8 sur 
 
 ## II.1. Mise en place du serveur
 
-- Création du droplet
-- Mise à jours des packages du serveur
-- Installation de python, postgresql, git, nginx et supervisor
-- Clone du repository sur le serveur
-- Paramétrage nginx et supervisor
-- Paramétrage du pare-feu
+- Création d'un Droplet Digital Ocean à l'adresse [http://167.172.169.38](http://167.172.169.38) :
+- Mise en place de la connexion SSH, mise à jours des packages du serveur et création d'un utilisateur `guillaume` :
+- Installation de `python3`, `postgresql`, `git`, `nginx` et `supervisor`.
+- Clone du [repository](https://github.com/GuillaumeOj/Pur-Beurre) dans le répertoire `/home/guillaume/pur-beurre`. 
+- Paramétrage du pare-feu `UFW` :
+
+![Configuration de UFW](img/01-UFW-Status.png){ width=300px }
+
+- Configuration de NGINX et Supervisor :
+
+![Configuration de NGINX](img/02-Configuration-NGINX.png){ width=300px }
+
+![Configuration de supervisor](img/03-Configuration-Supervisor.png){ width=300px }
+
+\pagebreak
 - Création de tâches CRON
-- Mise en place du domaine et des sous-domaines
+
+![Mise en place de tâches CRON](img/04-Cron-tasks.png){ width=300px }
 
 
 ## II.2. Mise en place du CI
 
-- Paramétrage Travis
-- Mise en place de Mergify
+- Configuration de Travis pour la partie Continuous Integration :
+
+![Configuration de Travis](img/05-Configuration-Travis.png){ width=300px }
+
+- Mise en place et configuration de Mergify pour le merge des Pull Requests :
+
+![Configuration de Mergify](img/06-Configuration-Mergify.png){ width=300px }
 
 
+\pagebreak
 ## II.3. Monitoring de l'application
 
-- Sentry
-- Monitoring Digital Ocean
+- Configuration de Sentry pour le reporting des issues non gérées par l'application :
+
+![Dashboard de Sentry](img/07-Dahsboard-Sentry.png){ width=300px }
+
+- Mise en place d'un monitoring du Droplet en utilisant les outils mis à disposition par Digital Ocean :
+
+![Monitoring Digital Ocean](img/08-Monitoring-Digital-Ocean.png){ width=300px }
 
 # III. Bilan
 
