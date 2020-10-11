@@ -15,89 +15,89 @@ geometry: margin=1.5cm
 
 Ce projet se base sur le projet 8 : _[Créez une plateforme pour les amateurs de Nutella](https://openclassrooms.com/fr/paths/68/projects/159/assignment)_.
 
-L'objectif principal de ce projet et de déployer l'application du projet 8 sur un serveur paramétré par nos soins. Pour cela nous devons mettre en œuvre les éléments suivants :
+L'objectif principal est de déployer l'application réalisée au projet 8 sur un serveur paramétré par nos soins. Pour cela nous devons mettre en œuvre les éléments suivants :
+
 - un outil d'intégration continue type [Travis](https://travis-ci.com/),
-- déployer l'application sur un serveur du même type que ceux proposés pas [Digital Ocean](https://www.digitalocean.com/),
-- un outil de monitoring permettant le suivi des performances du serveur,
-- un système de logging pour surveiller les logs de l'application du type [Sentry](https://sentry.io/welcome/),
-- créer un tâche CRON pour la mise à jour de la base de données de l'application à raison d'une fois par semaine,
+- déployer l'application sur un serveur (ici un serveur proposé par [Digital Ocean](https://www.digitalocean.com/)),
+- monitorer les performances de notre serveur,
+- logger les erreurs non gérées par notre application avec l'aide de [Sentry](https://sentry.io/welcome/),
+- créer un tâche CRON pour mettre à jour la base de données de l'application une fois par semaine,
 - et enfin utiliser un nom de domaine (optionnel).
 
 ## I.1. Liens du projets
 
-- Le site est visible en ligne à cette adresse : _[http://projet-10.ojardias.io/](http://projet-10.ojardias.io/)_.
+- Le site est visible en ligne à cette adresse : _[https://projet-10.ojardias.io/](https://projet-10.ojardias.io/)_.
 
 # II. Démarche de création
 
 ## II.1. Mise en place du serveur
 
-- Création d'un Droplet Digital Ocean à l'adresse [http://167.172.169.38](http://167.172.169.38) :
-- Mise en place de la connexion SSH, mise à jours des packages du serveur et création d'un utilisateur `guillaume` :
+- Création d'un `Droplet` Digital Ocean à l'adresse [http://167.172.169.38](http://167.172.169.38).
+- Connexion au serveur en SSH, mise à jour des packages du serveur et création d'un utilisateur `guillaume`.
 - Installation de `python3`, `postgresql`, `git`, `nginx` et `supervisor`.
-- Clone du [repository](https://github.com/GuillaumeOj/Pur-Beurre) dans le répertoire `/home/guillaume/pur-beurre`. 
-- Paramétrage du pare-feu `UFW` :
+- Clone du [repository GitHub](https://github.com/GuillaumeOj/Pur-Beurre) dans le répertoire `/home/guillaume/pur-beurre`. 
+- Paramétrage du pare-feu `UFW`.
+- Configuration de NGINX et Supervisor.
+- Création de la tâche CRON pour mettre à jour notre base de données.
 
 ![Configuration de UFW](img/01-UFW-Status.png){ width=300px }
-
-- Configuration de NGINX et Supervisor :
-
-![Configuration de NGINX](img/02-Configuration-NGINX.png){ width=300px }
-
+![Configuration de NGINX](img/02-Configuration-NGINX.png){ height=300px }
 ![Configuration de supervisor](img/03-Configuration-Supervisor.png){ width=300px }
-
-\pagebreak
-- Création de tâches CRON
-
 ![Mise en place de tâches CRON](img/04-Cron-tasks.png){ width=300px }
 
 
+\pagebreak
 ## II.2. Mise en place du CI
 
-- Configuration de Travis pour la partie Continuous Integration :
+- Configuration de Travis pour éxecuter nos tests avant de merger dans la branche master de notre repository :
+- Mise en place et configuration de Mergify pour automatiser le merge des pull-requests :
 
 ![Configuration de Travis](img/05-Configuration-Travis.png){ width=300px }
-
-- Mise en place et configuration de Mergify pour le merge des Pull Requests :
-
 ![Configuration de Mergify](img/06-Configuration-Mergify.png){ width=300px }
 
 
-\pagebreak
 ## II.3. Monitoring de l'application
 
-- Configuration de Sentry pour le reporting des issues non gérées par l'application :
+- Configuration de Sentry pour logger les erreurs non gérées par l'application :
+- Mise en place d'un monitoring du serveur en utilisant les outils mis à disposition par Digital Ocean :
 
 ![Dashboard de Sentry](./img/07-Dahsboard-Sentry.png){ width=300px }
-
-- Mise en place d'un monitoring du Droplet en utilisant les outils mis à disposition par Digital Ocean :
-
 ![Monitoring Digital Ocean](./img/08-Monitoring-Digital-Ocean.png){ width=300px }
 
+\pagebreak
 # III. Bilan
 
 ## III.1. NGINX et Supervisor
 
-La combinaison de ces deux outils permet de mettre en place très rapidement avec une configuration minimaliste un serveur fonctionnel.
-Cependant, j'ai dû faire face à deux difficultés pour la configuration de ces deux services.
+La combinaison de ces deux outils permet de mettre en place très rapidement avec une configuration simple un serveur d'application fonctionnel.
+Cependant, j'ai dû faire face à deux difficultés pour leur configuration.
 
-Je souhaitais héberger d'autres applications sur ce serveur, mon CV en  ligne (https://guillaume.ojardias.io) par exemple. Après quelques tâtonnements et essais infructueux, j'ai fini par comprendre qu'il suffisait simplement de rediriger chaque application sur un port local unique. Raison pour laquelle l'application du projet 8 est redirigée vers le port 8001 (et non 8000 par défaut).
+Je souhaitais héberger d'autres applications sur ce serveur, notamment mon [CV en  ligne](https://guillaume.ojardias.io). Après quelques tâtonnements et essais infructueux, j'ai fini par comprendre qu'avec le comportement par défaut de `gunicorn` les applications utilsaient toutes le port 8000. Ainsi, pour chaque application, je fais attention à utiliser un port différent (8000, 8001, 8002, etc.)
 
-Ensuite, je tenais à mettre en place des certificats SSL. Après un premier essai catastrophique, dans la panique j'ai complètement réinitialisé mon serveur à zéro, j'ai fini par comprendre qu'il me manquait une étape cruciale. Modifier les `Nameservers` de mon fournisseur de nom de domaine vers ceux de Digital Ocean, j'ai finit par réussir à avoir une configuration qui fonctionne.
+Ensuite, je tenais à mettre en place des certificats SSL. Pour cela, j'ai dû modifier les `Nameservers` de mon fournisseur de nom de domaine vers ceux de Digital Ocean, puis avec l'aide de `certbot` j'ai pû créer mes certificats et mettre à jour la configuration de mes serveurs `Nginx`.
 
-## III.2. Travis, Sentry et Monitoring
+## III.2. Travis
 
-Même si ces trois outils n'ont pas forcément de rapport les uns avec les autres, je me suis permis de les regrouper. En effet, je n'ai pas eu de difficultés particulière quand à leur utilisation (dans le cadre de mon stage, nous utilisons [CircleCi](https://circleci.com/) et [Sentry](https://sentry.io/)).
+L'utilisation de Travis sur ce projet, m'a permis de découvrir un nouvel outil de `Continuous Integration`. En effet, dans le stage que je suis en train de faire, nous utilisons `CircleCi` qui est très similaire.
 
-Sentry m'a permis toutefois de mettre en avant un bug non géré est embêtant sur mon application du projet 8. Un bug sur les templates des erreurs `4xx` et `5xx`. Et j'ai pu ainsi apporter un correctif.
+La configuration par fichier `yml` se fait très aisément et ne présente pas de difficultés particulières pour une utilisation basique comme j'ai pû le faire ici.
 
-## III.3. Mergify
+## III.3. Sentry et Monitoring
 
-Pour finir, un dernier mot sur l'utilisation de Mergify pour compléter le processus de Continuous Integration. J'ai découvert cet outil par le biais de mon stage chez l'éditeur [Mergify](https://mergify.io). Travaillant dessus et l'utilisant au quotidien, je ne pouvais pas mettre un système de pull-request sur mon repository sans au final utilisé ce plugin permettant de merger mes pull-requests une fois les conditions paramétrées remplies.
+Le monitoring d'une application et de son serveur sont des choses essentiels au bon fonctionnement de celle-ci.
 
-Dans le cadre de ce projet, la pull-request est mergée dans la branche master une fois que les build Travis ont le statut `success` et sans review à partir du moment où je suis l'auteur de la pull-request.
+Ainsi la mise en place de `Sentry` m'a pernis de mettre en avant une erreur non gérée par mon application. Les templates utilisés pour les erreurs `4xx` et `5xx` ne se chargaient pas correctement et faisaient planter le serveur d'application. J'ai pu ainsi apporter un correctif et afficher correctement les pages d'erreurs aux visiteurs.
+
+## III.4. Mergify
+
+Je me suis permis d'ajouter un outil sur ce projet qui est `Mergify`.
+
+Cet outil permet, entre autre, de merger automatiquement les pull-requests en fonctions de certaines conditions établies par l'utilisateur.
+
+Ainsi, dans le cadre de ce projet, la pull-request est mergée dans la branche master une fois que les build Travis ont le statut `success` et à condition que j'en sois l'auteur. Á l'issu de ce merge, la branche crée pour la pull-request est supprimée.
 
 ## III.4 Conclusion
 
-Pour conclure, je suis très content des sujets que j'ai pu aborder au cours de ce projet. C'est en quelque sorte la "dernière" brique d'un projet permettant de gérer un projet de sa conception à sa mise en production en passant par sa réalisation.
+Je suis très content des sujets que j'ai pû aborder au cours de ce projet. C'est en quelque sorte la "dernière" brique d'un projet permettant de gérer une application de sa conception à sa mise en production en passant par sa réalisation.
 
-La dernière chose que j'aimerais faire pour améliorer mon workflow et être dans une dynamique de Continuous Integration / Continuous Deployement, c'est de mettre en place un outil permettant de déployer automatiquement mes applications lorsque la branche master du repository est mise à jour.
+La dernière chose que j'aimerais faire pour améliorer le workflow  de mon projet, consiste à mettre en place un outil permettant de déployer automatiquement mon applications lorsque la branche master du repository GitHub est mise à jour. Permettant ainsi un déploiement continue.
