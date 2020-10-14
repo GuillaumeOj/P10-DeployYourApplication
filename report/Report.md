@@ -32,37 +32,26 @@ L'objectif principal est de déployer l'application réalisée au projet 8 sur u
 
 ## II.1. Mise en place du serveur
 
-- Création d'un `Droplet` Digital Ocean à l'adresse [http://167.172.169.38](http://167.172.169.38).
-- Connexion au serveur en SSH, mise à jour des packages du serveur et création d'un utilisateur `guillaume`.
-- Installation de `python3`, `postgresql`, `git`, `nginx` et `supervisor`.
-- Clone du [repository GitHub](https://github.com/GuillaumeOj/Pur-Beurre) dans le répertoire `/home/guillaume/pur-beurre`. 
-- Paramétrage du pare-feu `UFW`.
-- Configuration de NGINX et Supervisor.
-- Création de la tâche CRON pour exécuter le script de mise à jour de la base de données (script disponible _[ici](https://github.com/GuillaumeOj/Pur-Beurre/blob/master/update_pur_beurre.sh)_).
-
-    ![Configuration de UFW](img/01-UFW-Status.png){ width=300px }
-    ![Configuration de NGINX](img/02-Configuration-NGINX.png){ height=300px }
-    ![Configuration de supervisor](img/03-Configuration-Supervisor.png){ width=300px }
-    ![Mise en place de tâches CRON](img/04-Cron-tasks.png){ width=300px }
+- Création d'un Droplet Digital Ocean à l'adresse [http://167.172.169.38](http://167.172.169.38).
+- Connexion au serveur en SSH, mise à jour des packages du serveur et création d'un utilisateur autre que super-utilisateur
+- Installation des packages nécessaires au fonctionnement du serveur et de l'application `python3`, `postgresql`, `git`, `nginx` et `supervisor`.
+- Clone du [repository GitHub](https://github.com/GuillaumeOj/Pur-Beurre) sur le serveur.
+- Paramétrage du pare-feu UFW : voir `img/01-UFW-Status.png`
+- Configuration de NGINX et Supervisor : voir `img/02-Configuration-NGINX.png` et `img/03-Configuration-Supervisor.png`
+- Création de la tâche CRON pour exécuter le commande de mise à jour de la base de donnée : voir `img/04-Cron-tasks.png`
 
 
-\pagebreak
 ## II.2. Mise en place du CI
 
-- Configuration de Travis pour exécuter nos tests avant de merger dans la branche master de notre repository. On peut accéder au dashboard de travis en suivant _[ce lien](https://travis-ci.com/github/GuillaumeOj/Pur-Beurre)_
-- Mise en place et configuration de Mergify pour automatiser le merge des pull-requests.
-
-    ![Configuration de Travis](img/05-Configuration-Travis.png){ width=300px }
-    ![Configuration de Mergify](img/06-Configuration-Mergify.png){ width=300px }
+- Configuration de Travis pour exécuter nos tests avant de merger dans la branche master de notre repository. On peut accéder au dashboard de Travis en suivant _[ce lien](https://travis-ci.com/github/GuillaumeOj/Pur-Beurre)_. Voir aussi `img/05-Configuration-Travis.png`.
+- Mise en place et configuration de Mergify pour automatiser le merge des pull-requests. Voir `img/06-Configuration-Mergify.png`.
 
 
 ## II.3. Monitoring de l'application
 
-- Configuration de Sentry pour logger les erreurs non gérées par l'application :
-- Mise en place d'un monitoring du serveur en utilisant les outils mis à disposition par Digital Ocean :
+- Configuration de Sentry pour logger les erreurs non gérées par l'application : voir `img/07-Dahsboard-Sentry.png`.
+- Mise en place d'un monitoring du serveur en utilisant les outils mis à disposition par Digital Ocean : voir `img/08-Monitoring-Digital-Ocean.png`.
 
-    ![Dashboard de Sentry](./img/07-Dahsboard-Sentry.png){ width=300px }
-    ![Monitoring Digital Ocean](./img/08-Monitoring-Digital-Ocean.png){ width=300px }
 
 \pagebreak
 # III. Bilan
