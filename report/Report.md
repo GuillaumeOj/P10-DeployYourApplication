@@ -38,7 +38,7 @@ L'objectif principal est de déployer l'application réalisée au projet 8 sur u
 - Clone du [repository GitHub](https://github.com/GuillaumeOj/Pur-Beurre) dans le répertoire `/home/guillaume/pur-beurre`. 
 - Paramétrage du pare-feu `UFW`.
 - Configuration de NGINX et Supervisor.
-- Création de la tâche CRON pour mettre à jour notre base de données.
+- Création de la tâche CRON pour exécuter le script de mise à jour de la base de données (script disponible [ici](https://github.com/GuillaumeOj/Pur-Beurre/blob/master/update_pur_beurre.sh)).
 
     ![Configuration de UFW](img/01-UFW-Status.png){ width=300px }
     ![Configuration de NGINX](img/02-Configuration-NGINX.png){ height=300px }
@@ -64,7 +64,7 @@ L'objectif principal est de déployer l'application réalisée au projet 8 sur u
     ![Dashboard de Sentry](./img/07-Dahsboard-Sentry.png){ width=300px }
     ![Monitoring Digital Ocean](./img/08-Monitoring-Digital-Ocean.png){ width=300px }
 
-    \pagebreak
+\pagebreak
 # III. Bilan
 
 ## III.1. NGINX et Supervisor
